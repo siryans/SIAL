@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LesKodingBali</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-gray-800 p-5">
+            <h1 class="text-2xl font-bold mb-10">Leskoding</h1>
+            <ul>
+                <li class="mb-4"><a href="dashboard.html" class="text-gray-400 hover:text-white">Dashboard</a></li>
+                <li class="mb-4"><a href="user.html" class="text-white bg-blue-900 p-2 rounded">User</a></li>
+                <li class="mb-4"><a href="Les.html" class="text-gray-400 hover:text-white">Les</a></li>
+                <li class="mb-4"><a href="Absensi.html" class="text-gray-400 hover:text-white">Absensi</a></li>
+                <li class="mb-4"><a href="Pembayaran.html" class="text-gray-400 hover:text-white">Pembayaran</a></li>
+                <li class="mb-4"><a href="Murid.html" class="text-gray-400 hover:text-white">Murid</a></li>
+                <li class="mb-4"><a href="Trial.html" class="hover:text-gray-400">Trial</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="w-3/4 p-10">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-xl font-bold text-green-500">User Management</h2>
+                <div class="flex space-x-2">
+                    <button class="bg-gray-200 text-black px-4 py-2 rounded">User Active</button>
+                    <button class="bg-white text-blue-500 px-4 py-2 rounded">User Waiting</button>
+                </div>
+            </div>
+
+            <!-- Form to Add/Edit User -->
+            <form id="userForm" class="bg-gray-800 p-5 rounded mb-5">
+                <h3 class="text-lg font-bold mb-4">Add/Edit User</h3>
+                <input type="hidden" id="editIndex">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" id="username" placeholder="Username" class="p-2 border border-gray-300 rounded text-black" required>
+                    <input type="password" id="password" placeholder="Password" class="p-2 border border-gray-300 rounded text-black" required>
+                    <input type="text" id="nama" placeholder="Nama" class="p-2 border border-gray-300 rounded text-black" required>
+                    <input type="text" id="noHP" placeholder="No HP" class="p-2 border border-gray-300 rounded text-black" required>
+                    <input type="text" id="alamat" placeholder="Alamat" class="p-2 border border-gray-300 rounded text-black" required>
+                    <select id="jabatan" class="p-2 border border-gray-300 rounded text-black" required>
+                        <option value="" disabled selected>Jabatan</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Keuangan">Keuangan</option>
+                        <option value="Tutor">Tutor</option>
+                    </select>
+                </div>
+                <button type="submit" class="mt-4 bg-green-500 text-white px-4 py-2 rounded">Add/Edit User</button>
+            </form>
+
+            <table class="w-full bg-white text-black rounded">
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="p-2 border">ID User</th>
+                        <th class="p-2 border">ID Jabatan</th>
+                        <th class="p-2 border">Jabatan</th>
+                        <th class="p-2 border">Username</th>
+                        <th class="p-2 border">Password</th>
+                        <th class="p-2 border">Nama</th>
+                        <th class="p-2 border">No HP</th>
+                        <th class="p-2 border">Alamat</th>
+                        <th class="p-2 border">Status Aktif</th>
+                        <th class="p-2 border">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Sample Data -->
+                    <tr>
+                        <td class="p-2 border">1</td>
+                        <td class="p-2 border">101</td>
+                        <td class="p-2 border">Owner</td>
+                        <td class="p-2 border">admin</td>
+                        <td class="p-2 border">password123</td>
+                        <td class="p-2 border">Administrator</td>
+                        <td class="p-2 border">081234567890</td>
+                        <td class="p-2 border">Jl. Merdeka No.1</td>
+                        <td class="p-2 border">Aktif</td>
+                        <td class="p-2 border">
+                            <button class="text-blue-500 editUser" data-index="0">Edit</button>
+                            <button class="text-red-500 deleteUser" data-index="0">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border">2</td>
+                        <td class="p-2 border">102</td>
+                        <td class="p-2 border">Keuangan</td>
+                        <td class="p-2 border">rama123</td>
+                        <td class="p-2 border">ramaPass</td>
+                        <td class="p-2 border">Rama Astra</td>
+                        <td class="p-2 border">081234567891</td>
+                        <td class="p-2 border">Jl. Sudirman No.2</td>
+                        <td class="p-2 border">Aktif</td>
+                        <td class="p-2 border">
+                            <button class="text-blue-500 editUser" data-index="1">Edit</button>
+                            <button class="text-red-500 deleteUser" data-index="1">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border">3</td>
+                        <td class="p-2 border">103</td>
+                        <td class="p-2 border">Tutor</td>
+                        <td class="p-2 border">inyomanabi</td>
+                        <td class="p-2 border">abiPass</td>
+                        <td class="p-2 border">I Nyoman Abinaya</td>
+                        <td class="p-2 border">081234567892</td>
+                        <td class="p-2 border">Jl. Diponegoro No.3</td>
+                        <td class="p-2 border">Non-aktif</td>
+                        <td class="p-2 border">
+                            <button class="text-blue-500 editUser" data-index="2">Edit</button>
+                            <button class="text-red-500 deleteUser" data-index="2">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border">4</td>
+                        <td class="p-2 border">104</td>
+                        <td class="p-2 border">Tutor</td>
+                        <td class="p-2 border">putusitha</td>
+                        <td class="p-2 border">sithaPass</td>
+                        <td class="p-2 border">Putu Sitha</td>
+                        <td class="p-2 border">081234567893</td>
+                        <td class="p-2 border">Jl. Gatot Subroto No.4</td>
+                        <td class="p-2 border">Aktif</td>
+                        <td class="p-2 border">
+                            <button class="text-blue-500 editUser" data-index="3">Edit</button>
+                            <button class="text-red-500 deleteUser" data-index="3">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border">5</td>
+                        <td class="p-2 border">105</td>
+                        <td class="p-2 border">Tutor</td>
+                        <td class="p-2 border">danesh123</td>
+                        <td class="p-2 border">daneshPass</td>
+                        <td class="p-2 border">Made Danesh</td>
+                        <td class="p-2 border">081234567894</td>
+                        <td class="p-2 border">Jl. Ahmad Yani No.5</td>
+                        <td class="p-2 border">Aktif</td>
+                        <td class="p-2 border">
+                            <button class="text-blue-500 editUser" data-index="4">Edit</button>
+                            <button class="text-red-500 deleteUser" data-index="4">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-5">
+                <a href="Login.html" class="text-blue-500 hover:underline"><strong>Keluar >></strong></a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Event listener for form submission
+        document.getElementById('userForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const nama = document.getElementById('nama').value;
+            const noHP = document.getElementById('noHP').value;
+            const alamat = document.getElementById('alamat').value;
+            const jabatan = document.getElementById('jabatan').value;
+            const editIndex = document.getElementById('editIndex').value;
+
+            const userTableBody = document.getElementById('userTableBody');
+            let newRow;
+
+            if (editIndex) {
+                // Edit existing user
+                newRow = userTableBody.rows[editIndex];
+                newRow.cells[3].textContent = username;
+                newRow.cells[4].textContent = password;
+                newRow.cells[5].textContent = nama;
+                newRow.cells[6].textContent = noHP;
+                newRow.cells[7].textContent = alamat;
+                newRow.cells[8].textContent = "Aktif"; // You can modify status based on conditions
+                document.getElementById('editIndex').value = ''; // Clear edit index
+            } else {
+                // Add new user
+                newRow = userTableBody.insertRow();
+                newRow.innerHTML = `
+                    <td class="p-2 border">${userTableBody.rows.length}</td>
+                    <td class="p-2 border">${jabatan === 'Owner' ? 101 : jabatan === 'Keuangan' ? 102 : 103}</td>
+                    <td class="p-2 border">${jabatan}</td>
+                    <td class="p-2 border">${username}</td>
+                    <td class="p-2 border">${password}</td>
+                    <td class="p-2 border">${nama}</td>
+                    <td class="p-2 border">${noHP}</td>
+                    <td class="p-2 border">${alamat}</td>
+                    <td class="p-2 border">Aktif</td>
+                    <td class="p-2 border">
+                        <button class="text-blue-500 editUser" data-index="${userTableBody.rows.length - 1}">Edit</button>
+                        <button class="text-red-500 deleteUser" data-index="${userTableBody.rows.length - 1}">Delete</button>
+                    </td>
+                `;
+            }
+
+            // Clear the form fields
+            document.getElementById('userForm').reset();
+        });
+
+        // Function to handle edit button click
+        document.getElementById('userTableBody').addEventListener('click', function (event) {
+            if (event.target.classList.contains('editUser')) {
+                const rowIndex = event.target.getAttribute('data-index');
+                const row = document.getElementById('userTableBody').rows[rowIndex];
+
+                document.getElementById('username').value = row.cells[3].textContent;
+                document.getElementById('password').value = row.cells[4].textContent;
+                document.getElementById('nama').value = row.cells[5].textContent;
+                document.getElementById('noHP').value = row.cells[6].textContent;
+                document.getElementById('alamat').value = row.cells[7].textContent;
+                document.getElementById('jabatan').value = row.cells[2].textContent;
+                document.getElementById('editIndex').value = rowIndex; // Set index for editing
+            }
+            if (event.target.classList.contains('deleteUser')) {
+                const rowIndex = event.target.getAttribute('data-index');
+                document.getElementById('userTableBody').deleteRow(rowIndex);
+            }
+        });
+    </script>
+</body>
+</html>

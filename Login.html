@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-900 text-white h-screen flex items-center justify-center">
+    <div class="flex w-3/4 h-3/4 bg-gray-800 rounded-lg shadow-lg">
+    
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-gray-900 p-6">
+            <h1 class="text-2xl font-bold mb-8">Leskoding</h1>
+            <ul>
+                <li class="mb-4">
+                    <a class="text-lg font-semibold bg-blue-900 p-2 rounded block" href="#">
+                        Login
+                    </a>
+                </li>
+                <li>
+                    <a class="text-lg font-semibold p-2 rounded block" href="#">
+                        Sign Up
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="w-3/4 p-10 flex flex-col items-center justify-center">
+            <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+                <div class="flex justify-center mb-6">
+                    <img alt="Illustration of people working together with light bulbs and laptops" class="w-64 h-48" height="200" src="https://storage.googleapis.com/a1aa/image/XuMM7cUezoSeH03ZkEFtMyLcXllruyC6WwbyHvXlSWdGZ2tTA.jpg" width="300"/>
+                </div>
+                <h2 class="text-2xl font-semibold mb-6">Login to Your Account</h2>
+                
+                <!-- Form with Action to Direct to Next Page -->
+                <form action="dashboard.html" method="GET">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2" for="email">Email</label>
+                        <input class="w-full p-2 bg-gray-700 rounded border border-gray-600" id="email" type="email" value="setiafinancial@schoola.pro"/>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2" for="password">Password</label>
+                        <div class="relative">
+                            <input class="w-full p-2 bg-gray-700 rounded border border-gray-600" id="password" type="password" value="password"/>
+                            <i class="fas fa-eye absolute right-3 top-3 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <p class="text-red-500 mb-4">Please login to your account</p>
+                    
+                    <!-- Correct Button with Action to Redirect -->
+                    <button class="w-full bg-blue-900 p-2 rounded text-lg font-semibold" type="submit">
+                        Login
+                    </button>
+                </form>
+            </div>
+            <p class="mt-6 text-sm text-gray-400">Made with <span class="text-red-500">❤️</span> by Leskoding Team</p>
+        </div>
+        
+    </div>
+</body>
+</html>

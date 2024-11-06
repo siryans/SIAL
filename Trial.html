@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trial Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script>
+        let trials = [
+            { id: 'T001', userId: 'U001', lesId: 'L001', muridId: 'M001', jadwal: '2024-11-10T10:00' },
+            { id: 'T002', userId: 'U002', lesId: 'L002', muridId: 'M002', jadwal: '2024-11-11T11:00' },
+            { id: 'T003', userId: 'U003', lesId: 'L003', muridId: 'M003', jadwal: '2024-11-12T14:00' },
+            { id: 'T004', userId: 'U004', lesId: 'L004', muridId: 'M004', jadwal: '2024-11-13T09:00' },
+        ];
+
+        let currentEditId = null;
+
+        function renderTable() {
+            const tbody = document.getElementById('trials-body');
+            tbody.innerHTML = '';
+            trials.forEach(trial => {
+                const row = `
+                    <tr class="bg-gray-50">
+                        <td class="py-2 px-4 border-b">${trial.id}</td>
+                        <td class="py-2 px-4 border-b">${trial.userId}</td>
+                        <td class="py-2 px-4 border-b">${trial.lesId}</td>
+                        <td class="py-2 px-4 border-b">${trial.muridId}</td>
+                        <td class="py-2 px-4 border-b">${trial.jadwal}</td>
+                        <td class="py-2 px-4 border-b text-center">
+                            <button class="text-blue-600" onclick="openEditModal('${trial.id}')">Edit</button>
+                            <button class="text-red-600" onclick="deleteTrial('${trial.id}')">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        function openAddModal() {
+            currentEditId = null;
+            resetForm();
+            document.getElementById('modal-title').innerText = 'Add Trial';
+            document.getElementById('modal-submit').innerText = 'Add Trial';
+            document.getElementById('trial-modal').classList.remove('hidden');
+        }
+
+        function openEditModal(id) {
+            const trial = trials.find(trial => trial.id === id);
+            if (trial) {
+                currentEditId = id;
+                document.getElementById('trial-id').value = trial.id;
+                document.getElementById('user-id').value = trial.userId;
+                document.getElementById('les-id').value = trial.lesId;
+                document.getElementById('murid-id').value = trial.muridId;
+                document.getElementById('jadwal').value = trial.jadwal;
+                document.getElementById('modal-title').innerText = 'Edit Trial';
+                document.getElementById('modal-submit').innerText = 'Save Changes';
+                document.getElementById('trial-modal').classList.remove('hidden');
+            }
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            const id = document.getElementById('trial-id').value;
+            const userId = document.getElementById('user-id').value;
+            const lesId = document.getElementById('les-id').value;
+            const muridId = document.getElementById('murid-id').value;
+            const jadwal = document.getElementById('jadwal').value;
+
+            if (currentEditId) {
+                // Edit existing trial
+                const index = trials.findIndex(trial => trial.id === currentEditId);
+                trials[index] = { id, userId, lesId, muridId, jadwal };
+            } else {
+                // Add new trial
+                trials.push({ id, userId, lesId, muridId, jadwal });
+            }
+
+            renderTable();
+            closeModal();
+        }
+
+        function deleteTrial(id) {
+            trials = trials.filter(trial => trial.id !== id);
+            renderTable();
+        }
+
+        function resetForm() {
+            document.getElementById('trial-form').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('trial-modal').classList.add('hidden');
+            resetForm();
+        }
+
+        // This function will highlight the "Trial" menu item if we're on the trial page
+        function highlightActiveMenu() {
+            const trialMenu = document.getElementById('trial-menu');
+            trialMenu.classList.add('bg-blue-900', 'text-white', 'py-3', 'px-6', 'text-lg', 'rounded-md', 'shadow-lg');
+        }
+
+        window.onload = function() {
+            renderTable();
+            highlightActiveMenu();  // Call the function to highlight the Trial menu
+        };
+    </script>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/4 bg-gray-800 h-screen p-5">
+            <h1 class="text-2xl font-bold mb-10">Leskoding</h1>
+            <ul>
+                <li class="mb-4"><a href="dashboard.html" class="hover:text-gray-400">Dashboard</a></li>
+                <li class="mb-4"><a href="user.html" class="hover:text-gray-400">User</a></li>
+                <li class="mb-4"><a href="Les.html" class="hover:text-gray-400">Les</a></li>
+                <li class="mb-4"><a href="Absensi.html" class="hover:text-gray-400">Absensi</a></li>
+                <li class="mb-4"><a href="Pembayaran.html" class="hover:text-gray-400">Pembayaran</a></li>
+                <li class="mb-4"><a href="Murid.html" class="hover:text-gray-400">Murid</a></li>
+                <li class="mb-4"><a href="Trial.html" id="trial-menu" class="hover:text-gray-400">Trial</a></li> <!-- This is the 'Trial' menu -->
+            </ul>
+        </div>
+        <!-- Main Content -->
+        <div class="w-3/4 p-10">
+            <div class="flex justify-between items-center mb-5">
+                <button class="bg-green-600 text-white px-4 py-2 rounded" onclick="openAddModal()">Add Trial</button>
+                <div class="bg-gray-700 p-2 rounded-full">
+                    <i class="fas fa-user text-white"></i>
+                </div>
+            </div>
+            <div class="bg-white text-black rounded-lg overflow-hidden">
+                <table class="min-w-full">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="py-2 px-4 border-b">ID Trial</th>
+                            <th class="py-2 px-4 border-b">ID User</th>
+                            <th class="py-2 px-4 border-b">ID Les</th>
+                            <th class="py-2 px-4 border-b">ID Murid</th>
+                            <th class="py-2 px-4 border-b">Jadwal Trial</th>
+                            <th class="py-2 px-4 border-b">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trials-body">
+                        <!-- Rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal for Add/Edit Trial -->
+            <div id="trial-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center">
+                <div class="bg-white text-black p-5 rounded-lg w-96">
+                    <h2 id="modal-title" class="text-xl font-bold mb-3">Add Trial</h2>
+                    <form id="trial-form" onsubmit="submitForm(event)">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="trial-id" placeholder="ID Trial" class="p-2 rounded" required>
+                            <input type="text" id="user-id" placeholder="ID User" class="p-2 rounded" required>
+                            <input type="text" id="les-id" placeholder="ID Les" class="p-2 rounded" required>
+                            <input type="text" id="murid-id" placeholder="ID Murid" class="p-2 rounded" required>
+                            <input type="datetime-local" id="jadwal" class="p-2 rounded" required>
+                            <button type="submit" id="modal-submit" class="bg-blue-600 text-white px-4 py-2 rounded col-span-2">Add Trial</button>
+                        </div>
+                    </form>
+                    <button class="mt-3 text-red-600" onclick="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
